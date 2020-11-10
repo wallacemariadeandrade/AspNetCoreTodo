@@ -6,6 +6,8 @@ namespace AspNetCoreTodo.Services
 {
     public class FakeTodoItemService : ITodoItemService
     {
+        public Task<bool> AddItemAsync(TodoItem newItem) => Task.FromResult<bool>(true);
+        
         public Task<TodoItem[]> GetIncompleteItemsAsync()
             => Task.FromResult(
                 new[]{
