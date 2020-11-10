@@ -40,7 +40,7 @@ namespace AspNetCoreTodo
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddSingleton<ITodoItemService, FakeTodoItemService>();
+            services.AddScoped<ITodoItemService, TodoItemService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
