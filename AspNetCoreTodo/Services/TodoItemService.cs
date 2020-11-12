@@ -29,7 +29,7 @@ namespace AspNetCoreTodo.Services
         public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
             => await _context
                 .Items
-                .Where(x => x.IsDone == false)
+                .Where(x => x.IsDone == false && x.UserId == user.Id)
                 .ToArrayAsync();
 
         public async Task<bool> MarkDoneAsync(Guid id)
