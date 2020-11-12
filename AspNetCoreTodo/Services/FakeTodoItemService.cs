@@ -38,7 +38,7 @@ namespace AspNetCoreTodo.Services
             return true;
         }
 
-        public Task<TodoItem[]> GetIncompleteItemsAsync()
+        public Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
             => Task.FromResult(
                 _database.ToArray()
             );

@@ -26,7 +26,7 @@ namespace AspNetCoreTodo.Services
             return await _context.SaveChangesAsync() == 1;
         }
 
-        public async Task<TodoItem[]> GetIncompleteItemsAsync()
+        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
             => await _context
                 .Items
                 .Where(x => x.IsDone == false)
