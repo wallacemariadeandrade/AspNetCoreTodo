@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreTodo.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreTodo.Services
 {
@@ -26,26 +27,28 @@ namespace AspNetCoreTodo.Services
             };
         }
 
-        public Task<bool> AddItemAsync(TodoItem newItem) => Task.FromResult<bool>(AddItem());
+        public Task<bool> AddItemAsync(TodoItem newItem, IdentityUser user) 
+            => Task.FromResult<bool>(AddItem(user.Id));
         
-        private bool AddItem()
+        private bool AddItem(string userId)
         {
             _database.Add(new TodoItem {
                 Title = "Continue learning ASP.NET Core",
                 DueAt = DateTimeOffset.Now.AddDays(2),
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                UserId = userId
             });
             return true;
         }
 
-        public Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
+        public Task<TodoItem[]> GetIncompleteItemsAsync(IdentityUser user)
             => Task.FromResult(
-                _database.ToArray()
+                _database.Where(x => x.UserId == user.Id).ToArray()
             );
 
-        public Task<bool> MarkDoneAsync(Guid id)
+        public Task<bool> MarkDoneAsync(Guid id, IdentityUser user)
         {
-            var item = _database.SingleOrDefault(x => x.Id == id);
+            var item = _database.SingleOrDefault(x => x.Id == id && x.UserId == user.Id);
             if(item == null) return Task.FromResult(false);
             item.IsDone = true;
             return Task.FromResult(true);
