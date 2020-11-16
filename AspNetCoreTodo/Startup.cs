@@ -39,10 +39,15 @@ namespace AspNetCoreTodo
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
+
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<UserManager<IdentityUser>>();
+            services.AddScoped<RoleManager<IdentityRole>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
