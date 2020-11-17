@@ -1,3 +1,5 @@
 AspNetCoreTodo/bin/Debug/
 AspNetCoreTodo/obj/
+AspNetCoreTodo.UnitTests/bin/Debug/
+AspNetCoreTodo.UnitTests/obj/
 .vscode/
